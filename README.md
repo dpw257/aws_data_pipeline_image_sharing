@@ -20,24 +20,25 @@ To coordinate a streaming schedule, an Airflow DAG was created that triggered a 
 
 ## Repository files
 
-- **129076a9eaf9_dag.py**: Airflow DAG to schedule data processing.
-- **README.md**: Project documentation.
-- **dataframes_to_delta_tables.ipynb**: Databricks notebook for cleaning and saving data to Delta tables.
-- **s3_bucket_to_databricks.ipynb**: Databricks notebook for accessing and cleaning data from an S3 bucket.
+
 - **user_posting_emulation.py**: Python script to simulate data uploads and send Kafka topics.
+- **s3_bucket_to_databricks.ipynb**: Databricks notebook for accessing and cleaning data from an S3 bucket.
+- **129076a9eaf9_dag.py**: Airflow DAG to schedule data processing.
 - **user_posting_emulation_streaming.py**: Python script to send streaming data to Kinesis.
+- **dataframes_to_delta_tables.ipynb**: Databricks notebook for cleaning and saving data to Delta tables.
 
 ---
 
 ## Installation instructions
 ### Prerequisites
+An AWS account with suitable rights is required for this project.
 - An AWS account with suitable rights.
 - AWS EC2 instance for Kafka client machine.
 - AWS MSK cluster and S3 bucket setup.
 - Databricks environment for running notebooks.
 - Access to AWS Kinesis and IAM roles.
 
-An AWS account with suitable rights is required for this project. Once the AWS setup is complete, run the files as follows:
+ Once the AWS setup is complete, run the files as follows:
 * Download and save Pinterest data to the AWS S3 bucket using user_posting_emulation.py 
 * In Databricks, access, clean and analyse the Pinterest data by running s3_bucket_to_databricks.ipynb
 * To create a streaming schedule, upload 129076a9eaf9_dag.py to a suitable AWS bucket
@@ -47,7 +48,7 @@ An AWS account with suitable rights is required for this project. Once the AWS s
 ---
 
 ## Usage instructions
-### 1. Scraped data
+### 1. Batch data
 
 On the AWS platform, navigate to the EC2 console. An EC2 instant should have already been created. Locate the key pair, copy the name of the key pair and copy the entire Value field. Save the Value field in a key pair file locally, ending in .pem. Name the file the same as the key pair.
 
@@ -101,6 +102,6 @@ Once the streaming data has been cleaned, you should save each stream in a Delta
 
 ## License
 
-This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the GNU GENERAL PUBLIC LICENSE - see the [LICENSE](LICENSE.txt) file for details.
 
 Copyright (c) [2024] [Daniel White]
