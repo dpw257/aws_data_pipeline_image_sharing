@@ -21,29 +21,20 @@ To coordinate a streaming schedule, an Airflow DAG was created that triggered a 
 ## Repository files
 
 
-- **user_posting_emulation.py**: Python script to simulate data uploads and send Kafka topics.
-- **s3_bucket_to_databricks.ipynb**: Databricks notebook for accessing and cleaning data from an S3 bucket.
-- **129076a9eaf9_dag.py**: Airflow DAG to schedule data processing.
-- **user_posting_emulation_streaming.py**: Python script to send streaming data to Kinesis.
-- **dataframes_to_delta_tables.ipynb**: Databricks notebook for cleaning and saving data to Delta tables.
+- `user_posting_emulation.py`: Python script to simulate data uploads and send Kafka topics.
+- `s3_bucket_to_databricks.ipynb`: Databricks notebook for accessing and cleaning data from an S3 bucket.
+- `129076a9eaf9_dag.py`: Airflow DAG to schedule data processing.
+- `user_posting_emulation_streaming.py`: Python script to send streaming data to Kinesis.
+- `dataframes_to_delta_tables.ipynb`: Databricks notebook for cleaning and saving data to Delta tables.
 
 ---
 
 ## Installation instructions
 ### Prerequisites
-An AWS account with suitable rights is required for this project.
-- An AWS account with suitable rights.
-- AWS EC2 instance for Kafka client machine.
-- AWS MSK cluster and S3 bucket setup.
-- Databricks environment for running notebooks.
-- Access to AWS Kinesis and IAM roles.
-
- Once the AWS setup is complete, run the files as follows:
-* Download and save Pinterest data to the AWS S3 bucket using user_posting_emulation.py 
-* In Databricks, access, clean and analyse the Pinterest data by running s3_bucket_to_databricks.ipynb
-* To create a streaming schedule, upload 129076a9eaf9_dag.py to a suitable AWS bucket
-* Save Pinterest data to the relevant Kinesis streams using user_posting_emulation_streaming.py
-* In Databricks, access and clean the data using dataframes_to_delta_tables.ipynb
+An AWS account with suitable rights is required for this project:
+- AWS EC2 instance for Kafka client machine
+- AWS MSK cluster and S3 bucket
+- Access to AWS Kinesis and IAM roles
 
 ---
 
@@ -80,13 +71,13 @@ Download the Confluent.io Amazon S3 Connector and configure to bucket.
 Set up the Kafka REST Proxy on your EC2 client machine.
 Install the Confluent package for the Kafka REST Proxy on your EC2 client machine, then start the REST proxy.
 
-In Databricks, run the notebook s3_bucket_to_databricks.ipynb to access, clean and analyse the Pinterest data.
+In Databricks, run the notebook `s3_bucket_to_databricks.ipynb` to access, clean and analyse the Pinterest data.
 
 
 ### 2. Streamed data
-If yours AWS account has not been provided with access to a MWAA environment Databricks-Airflow-env and its S3 bucket, you must create an API token in Databricks to connect to your AWS account, set up the MWAA-Databricks connection and create a requirements.txt file.
+If your AWS account doesn't have access to a MWAA environment Databricks-Airflow-env and its S3 bucket, you must create an API token in Databricks to connect to your AWS account, set up the MWAA-Databricks connection and create a requirements.txt file.
 
-Create a DAG file and upload it to the dags folder in your S3 bucket for MWAA. Then manually trigger the DAG and check it runs successfully.
+Upload the DAG file `129076a9eaf9_dag.py` to the dags folder in your S3 bucket for MWAA. Then manually trigger the DAG on Amazon Managed Workflows for Apache Airflow (MWAA) and check it runs successfully.
 
 Using Kinesis Data Streams, create three data streams, one for each Pinterest table (pin, geo, user).
 Copy the ARN of your Kinesis access role from the IAM console under Roles. This is the ARN you should use when setting up the Execution role for the integration point of all the methods. Your API should be able to invoke the following actions:
@@ -94,8 +85,8 @@ Copy the ARN of your Kinesis access role from the IAM console under Roles. This 
 * Create, describe and delete streams in Kinesis
 * Add records to streams in Kinesis
 
-Run the file user_posting_emulation_streaming.py to save the streamed data.
-In Databricks, run the file dataframes_to_delta_tables.ipynb to access and clean the data.
+Run the file `user_posting_emulation_streaming.py` to save the streamed data.
+In Databricks, run the file `dataframes_to_delta_tables.ipynb` to access and clean the data.
 Once the streaming data has been cleaned, you should save each stream in a Delta Table.
 
 ---
